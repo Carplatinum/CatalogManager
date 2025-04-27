@@ -3,21 +3,34 @@ from typing import List
 
 
 class Product:
+    """
+    Класс для описания товара с атрибутами и проверкой цены.
+    """
+
     def __init__(self, name: str, description: str, price: float, quantity: int):
+        """
+        Инициализация товара.
+
+        Args:
+            name (str): Название товара.
+            description (str): Описание товара.
+            price (float): Цена товара (должна быть > 0).
+            quantity (int): Количество товара на складе.
+        """
         self.name = name
         self.description = description
         self.__price = None  # приватный атрибут цены
-        self.price = price   # установка через сеттер с проверкой
+        self.price = price  # установка через сеттер с проверкой
         self.quantity = quantity
 
     @property
     def price(self):
-        """Геттер для цены"""
+        """Получить цену товара."""
         return self.__price
 
     @price.setter
     def price(self, new_price):
-        """Сеттер для цены с проверкой"""
+        """Установить цену товара с проверкой на положительное значение."""
         if new_price > 0:
             self.__price = new_price
         else:
@@ -25,7 +38,15 @@ class Product:
 
     @classmethod
     def new_product(cls, product_dict):
-        """Создаёт новый продукт из словаря"""
+        """
+        Создать объект Product из словаря.
+
+        Args:
+            product_dict (dict): Словарь с ключами name, description, price, quantity.
+
+        Returns:
+            Product: Новый объект товара.
+        """
         return cls(
             name=product_dict.get("name"),
             description=product_dict.get("description"),
@@ -34,22 +55,45 @@ class Product:
         )
 
     def __str__(self):
+        """Строковое представление товара."""
         return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
 
     def __add__(self, other):
+        """
+        Сложение двух товаров по общей стоимости (цена * количество).
+
+        Args:
+            other (Product): Другой товар.
+
+        Returns:
+            float: Суммарная стоимость.
+        """
         if not isinstance(other, Product):
             return NotImplemented
         return self.price * self.quantity + other.price * other.quantity
 
 
 class Category:
+    """
+    Класс для описания категории товаров.
+    Подсчитывает общее количество категорий и продуктов.
+    """
+
     category_count = 0
     product_count = 0
 
     def __init__(self, name: str, description: str, products=None):
+        """
+        Инициализация категории.
+
+        Args:
+            name (str): Название категории.
+            description (str): Описание категории.
+            products (list[Product], optional): Список продуктов.
+        """
         self.name = name
         self.description = description
-        self.__products: List[Product] = []  # приватный атрибут списка продуктов
+        self.__products: List[Product] = []  # приватный список продуктов
         Category.category_count += 1
 
         if products:
@@ -57,26 +101,36 @@ class Category:
                 self.add_product(product)
 
     def add_product(self, product: Product):
+        """Добавить продукт в категорию и увеличить счётчик."""
         self.__products.append(product)
         Category.product_count += 1
 
     @property
     def products(self) -> str:
-        """Геттер, возвращающий строку со списком продуктов"""
+        """Получить строку со списком всех продуктов категории."""
         return "".join(str(p) + "\n" for p in self.__products)
 
     @property
     def product_list(self) -> List[Product]:
-        """Геттер, возвращающий копию списка продуктов"""
+        """Получить копию списка продуктов категории."""
         return self.__products.copy()
 
     def __str__(self):
+        """Строковое представление категории с общим количеством продуктов."""
         total_quantity = sum(p.quantity for p in self.__products)
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
 
 def load_categories_from_json(file_path: str) -> List[Category]:
-    """Загрузка данных из JSON-файла и создание объектов категорий"""
+    """
+    Загрузить категории и продукты из JSON-файла.
+
+    Args:
+        file_path (str): Путь к JSON-файлу.
+
+    Returns:
+        list[Category]: Список объектов категорий с продуктами.
+    """
     categories = []
 
     with open(file_path, 'r', encoding='utf-8') as file:
