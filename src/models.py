@@ -3,12 +3,25 @@ from typing import List
 
 
 class Product:
+    """
+    Класс для описания товара.
+
+    Атрибуты:
+        name (str): Название товара.
+        description (str): Описание товара.
+        price (float): Цена товара (приватный атрибут с проверкой при установке).
+        quantity (int): Количество товара на складе.
+
+    Методы:
+        __init__(name, description, price, quantity): Инициализирует объект Product с проверкой цены.
+    """
     def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
         self.description = description
         self.__price = None  # приватный атрибут цены
         self.price = price   # установка через сеттер с проверкой
         self.quantity = quantity
+
 
     @property
     def price(self):
