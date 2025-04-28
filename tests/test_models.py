@@ -52,7 +52,8 @@ class TestCategoryStr:
         assert str(category) == "Категория 1, количество продуктов: 10 шт."
 
     def test_products_property_returns_str_list(self, category, products):
-        """Проверка, что свойство products возвращает строковые представления продуктов."""
+        """Проверка, что свойство products возвращает
+        строковые представления продуктов."""
         products_str = category.products
         for product in products:
             assert str(product) in products_str

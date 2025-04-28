@@ -1,6 +1,7 @@
 import json
 from typing import List
 
+
 class Product:
     """
     Базовый класс для описания товара.
@@ -40,26 +41,31 @@ class Product:
             raise TypeError("Складывать можно только товары одного типа")
         return self.price * self.quantity + other.price * other.quantity
 
+
 class Smartphone(Product):
     """
     Класс для описания смартфона.
     """
-    def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
+    def __init__(self, name, description, price,
+                 quantity, efficiency, model, memory, color):
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
         self.memory = memory
         self.color = color
 
+
 class LawnGrass(Product):
     """
     Класс для описания газонной травы.
     """
-    def __init__(self, name, description, price, quantity, country, germination_period, color):
+    def __init__(self, name, description, price, quantity,
+                 country, germination_period, color):
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
         self.color = color
+
 
 class Category:
     category_count = 0
@@ -77,7 +83,8 @@ class Category:
 
     def add_product(self, product):
         if not isinstance(product, Product):
-            raise TypeError("Можно добавлять только объекты Product или его наследников")
+            raise TypeError("Можно добавлять "
+                            "только объекты Product или его наследников")
         self.__products.append(product)
         Category.product_count += 1
 
@@ -92,6 +99,7 @@ class Category:
     def __str__(self):
         total_quantity = sum(p.quantity for p in self.__products)
         return f"{self.name}, количество продуктов: {total_quantity} шт."
+
 
 def load_categories_from_json(file_path: str) -> List[Category]:
     categories = []
