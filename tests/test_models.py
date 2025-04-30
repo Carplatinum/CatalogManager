@@ -1,59 +1,88 @@
 import pytest
-from src.models import Category, Product
+
+from src.models import Category, LawnGrass, Product, Smartphone
 
 
-class TestProductStrAndAdd:
-    """Тесты для строкового представления и сложения объектов Product."""
+class TestCreationInfoMixin:
+    def test_creation_prints_info(self, capsys):
+        p = Product("Товар", "Описание", 100, 5)
+        _ = repr(p)  # чтобы flake8 увидел использование переменной
+        captured = capsys.readouterr()
+        assert "Создан объект класса Product с параметрами" in captured.out
 
-    @pytest.fixture
-    def product_a(self):
-        """Фикстура: продукт A с ценой 100 и количеством 10."""
-        return Product("Товар A", "Описание A", 100, 10)
+    def test_repr_product(self):
+        p = Product("Товар", "Описание", 100, 5)
+        expected_repr = ("Product(name='Товар', "
+                         "description='Описание', price=100, quantity=5)")
+        assert repr(p) == expected_repr
 
-    @pytest.fixture
-    def product_b(self):
-        """Фикстура: продукт B с ценой 200 и количеством 2."""
-        return Product("Товар B", "Описание B", 200, 2)
+    def test_repr_smartphone(self):
+        s = Smartphone("Телефон", "Смартфон", 1000, 2, 90, "X", 128, "Черный")
+        expected_start = ("Smartphone(name='Телефон', "
+                          "description='Смартфон', price=1000, quantity=2")
+        expected_attrs = ["efficiency=90", "model='X'", "memory=128", "color='Черный'"]
+        r = repr(s)
+        assert r.startswith(expected_start)
+        for attr in expected_attrs:
+            assert attr in r
 
-    def test_str_representation(self, product_a):
-        """Проверка форматирования строки продукта (магазинное представление)."""
-        expected_str = "Товар A, 100 руб. Остаток: 10 шт."
-        assert str(product_a) == expected_str
+    def test_repr_lawngrass(self):
+        g = LawnGrass("Трава", "Газон", 500, 10, "Россия", "7 дней", "Зеленый")
+        expected_start = ("LawnGrass(name='Трава', "
+                          "description='Газон', price=500, quantity=10")
+        expected_attrs = ["country='Россия'",
+                          "germination_period='7 дней'", "color='Зеленый'"]
+        r = repr(g)
+        assert r.startswith(expected_start)
+        for attr in expected_attrs:
+            assert attr in r
 
-    def test_addition_of_two_products(self, product_a, product_b):
-        """Проверка сложения продуктов по формуле (price * quantity) для каждого."""
-        assert product_a + product_b == 1400  # 100*10 + 200*2
 
-    def test_addition_with_non_product(self, product_a):
-        """Проверка выброса TypeError при попытке сложить Product с не-Product."""
+class TestProductFunctionality:
+    def test_price_setter_positive(self):
+        p = Product("Телефон", "Смартфон", 10000, 5)
+        assert p.price == 10000
+        p.price = 15000
+        assert p.price == 15000
+
+    def test_price_setter_negative(self, capsys):
+        p = Product("Телефон", "Смартфон", 10000, 5)
+        p.price = -500
+        captured = capsys.readouterr()
+        assert "Цена не должна быть нулевая или отрицательная" in captured.out
+        assert p.price == 10000
+
+    def test_addition_same_class(self):
+        p1 = Product("Товар1", "Описание1", 100, 5)
+        p2 = Product("Товар2", "Описание2", 200, 3)
+        assert p1 + p2 == 100*5 + 200*3
+
+    def test_addition_different_class_raises(self):
+        s = Smartphone("Модель", "Описание", 1000, 2, 90, "X", 128, "Черный")
+        g = LawnGrass("Трава", "Описание", 500, 10, "Россия", "7 дней", "Зеленый")
         with pytest.raises(TypeError):
-            _ = product_a + 5
+            _ = s + g
 
 
-class TestCategoryStr:
-    """Тесты для строкового представления и свойств категорий."""
+class TestCategoryFunctionality:
+    def test_add_product_and_counts(self):
+        cat = Category("Категория", "Описание")
+        p = Product("Товар", "Описание", 100, 1)
+        s = Smartphone("Модель", "Описание", 1000, 2, 90, "X", 128, "Черный")
+        g = LawnGrass("Трава", "Описание", 500, 10, "Россия", "7 дней", "Зеленый")
 
-    @pytest.fixture
-    def products(self):
-        """Фикстура: список из трёх продуктов с разными характеристиками."""
-        return [
-            Product("Товар 1", "Описание 1", 50, 5),
-            Product("Товар 2", "Описание 2", 150, 3),
-            Product("Товар 3", "Описание 3", 200, 2),
-        ]
+        cat.add_product(p)
+        cat.add_product(s)
+        cat.add_product(g)
 
-    @pytest.fixture
-    def category(self, products):
-        """Фикстура: категория с тремя продуктами."""
-        return Category("Категория 1", "Описание категории", products)
+        assert len(cat.product_list) == 3
+        assert Category.product_count >= 3  # учитывая все тесты
 
-    def test_str_representation(self, category):
-        """Проверка форматирования строки категории (общее количество продуктов)."""
-        assert str(category) == "Категория 1, количество продуктов: 10 шт."
-
-    def test_products_property_returns_str_list(self, category, products):
-        """Проверка, что свойство products возвращает
-        строковые представления продуктов."""
-        products_str = category.products
-        for product in products:
-            assert str(product) in products_str
+    def test_add_invalid_product_raises(self):
+        cat = Category("Категория", "Описание")
+        with pytest.raises(TypeError):
+            cat.add_product("Не продукт")
+        with pytest.raises(TypeError):
+            cat.add_product(123)
+        with pytest.raises(TypeError):
+            cat.add_product(None)

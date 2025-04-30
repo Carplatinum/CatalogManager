@@ -19,6 +19,8 @@ Category - категория товаров с атрибутами: назва
 
 Также реализована функция загрузки категорий и товаров из JSON-файла, что позволяет удобно импортировать данные:  
 * load_categories_from_json(file_path: str) -> List[Category]
+  
+В проекте реализован абстрактный базовый класс BaseProduct для всех товаров, а также mixin CreationInfoMixin, который выводит в консоль информацию о создании объекта продукта с его параметрами. Все продукты наследуют BaseProduct, а Product использует mixin для информативного создания.
 
 # Установка
 Клонируйте репозиторий:  
@@ -47,4 +49,3 @@ cd catalogmanager
 
 Email: mymillions@ya.ru  
 GitHub: https://github.com/Carplatinum
-
