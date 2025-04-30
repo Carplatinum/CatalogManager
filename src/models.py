@@ -1,17 +1,41 @@
 import json
 from typing import List
+from abc import ABC, abstractmethod
 
 
-class Product:
-    """
-    Базовый класс для описания товара.
-    """
+class BaseProduct(ABC):
+    """Абстрактный базовый класс для всех продуктов."""
+
+    @abstractmethod
     def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
         self.description = description
-        self.__price = None
         self.price = price
         self.quantity = quantity
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+
+class CreationInfoMixin:
+    """Миксин для вывода информации о создании объекта."""
+
+    def __init__(self, *args, **kwargs):
+        class_name = self.__class__.__name__
+        print(f"Создан объект класса {class_name} с параметрами: {args} {kwargs}")
+        super().__init__(*args, **kwargs)
+
+
+class Product(CreationInfoMixin, BaseProduct):
+    """
+    Базовый класс для описания товара.
+    Использует CreationInfoMixin для вывода информации при создании.
+    """
+
+    def __init__(self, name: str, description: str, price: float, quantity: int):
+        self.__price = None  # приватный атрибут цены
+        super().__init__(name, description, price, quantity)
 
     @property
     def price(self):
@@ -45,7 +69,9 @@ class Product:
 class Smartphone(Product):
     """
     Класс для описания смартфона.
+    Наследуется только от Product.
     """
+
     def __init__(self, name, description, price,
                  quantity, efficiency, model, memory, color):
         super().__init__(name, description, price, quantity)
@@ -58,7 +84,9 @@ class Smartphone(Product):
 class LawnGrass(Product):
     """
     Класс для описания газонной травы.
+    Наследуется только от Product.
     """
+
     def __init__(self, name, description, price, quantity,
                  country, germination_period, color):
         super().__init__(name, description, price, quantity)
