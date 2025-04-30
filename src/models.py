@@ -17,20 +17,40 @@ class BaseProduct(ABC):
     def __str__(self):
         pass
 
+    @abstractmethod
+    def __repr__(self):
+        pass
+
 
 class CreationInfoMixin:
-    """Миксин для вывода информации о создании объекта."""
+    """
+    Миксин, который при создании объекта
+    выводит в консоль информацию о классе и параметрах,
+    а также реализует __repr__ для информативного отображения объекта.
+    """
 
     def __init__(self, *args, **kwargs):
         class_name = self.__class__.__name__
-        print(f"Создан объект класса {class_name} с параметрами: {args} {kwargs}")
+        print(f"Создан объект класса {class_name} "
+              f"с параметрами: args={args}, kwargs={kwargs}")
         super().__init__(*args, **kwargs)
+
+    def __repr__(self):
+        # Собираем параметры объекта для отображения
+        params = []
+        # Перебираем атрибуты, которые обычно передаются в __init__
+        for attr in ('name', 'description', 'price', 'quantity'):
+            value = getattr(self, attr, None)
+            if value is not None:
+                params.append(f"{attr}={value!r}")
+        params_str = ", ".join(params)
+        return f"{self.__class__.__name__}({params_str})"
 
 
 class Product(CreationInfoMixin, BaseProduct):
     """
     Базовый класс для описания товара.
-    Использует CreationInfoMixin для вывода информации при создании.
+    Использует CreationInfoMixin для вывода информации при создании и __repr__.
     """
 
     def __init__(self, name: str, description: str, price: float, quantity: int):
@@ -60,6 +80,10 @@ class Product(CreationInfoMixin, BaseProduct):
     def __str__(self):
         return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
 
+    def __repr__(self):
+        # Переопределяем __repr__, чтобы добавить больше параметров, если нужно
+        return super().__repr__()
+
     def __add__(self, other):
         if type(self) is not type(other):
             raise TypeError("Складывать можно только товары одного типа")
@@ -80,6 +104,12 @@ class Smartphone(Product):
         self.memory = memory
         self.color = color
 
+    def __repr__(self):
+        base_repr = super().__repr__()
+        return (f"{base_repr[:-1]}, "
+                f"efficiency={self.efficiency!r}, model={self.model!r}, "
+                f"memory={self.memory!r}, color={self.color!r})")
+
 
 class LawnGrass(Product):
     """
@@ -93,6 +123,12 @@ class LawnGrass(Product):
         self.country = country
         self.germination_period = germination_period
         self.color = color
+
+    def __repr__(self):
+        base_repr = super().__repr__()
+        return (f"{base_repr[:-1]}, country={self.country!r}, "
+                f"germination_period={self.germination_period!r}, "
+                f"color={self.color!r})")
 
 
 class Category:
