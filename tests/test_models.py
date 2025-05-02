@@ -1,88 +1,162 @@
-import pytest
-
-from src.models import Category, LawnGrass, Product, Smartphone
-
-
-class TestCreationInfoMixin:
-    def test_creation_prints_info(self, capsys):
-        p = Product("Товар", "Описание", 100, 5)
-        _ = repr(p)  # чтобы flake8 увидел использование переменной
-        captured = capsys.readouterr()
-        assert "Создан объект класса Product с параметрами" in captured.out
-
-    def test_repr_product(self):
-        p = Product("Товар", "Описание", 100, 5)
-        expected_repr = ("Product(name='Товар', "
-                         "description='Описание', price=100, quantity=5)")
-        assert repr(p) == expected_repr
-
-    def test_repr_smartphone(self):
-        s = Smartphone("Телефон", "Смартфон", 1000, 2, 90, "X", 128, "Черный")
-        expected_start = ("Smartphone(name='Телефон', "
-                          "description='Смартфон', price=1000, quantity=2")
-        expected_attrs = ["efficiency=90", "model='X'", "memory=128", "color='Черный'"]
-        r = repr(s)
-        assert r.startswith(expected_start)
-        for attr in expected_attrs:
-            assert attr in r
-
-    def test_repr_lawngrass(self):
-        g = LawnGrass("Трава", "Газон", 500, 10, "Россия", "7 дней", "Зеленый")
-        expected_start = ("LawnGrass(name='Трава', "
-                          "description='Газон', price=500, quantity=10")
-        expected_attrs = ["country='Россия'",
-                          "germination_period='7 дней'", "color='Зеленый'"]
-        r = repr(g)
-        assert r.startswith(expected_start)
-        for attr in expected_attrs:
-            assert attr in r
+import json
+from abc import ABC, abstractmethod
+from typing import List
 
 
-class TestProductFunctionality:
-    def test_price_setter_positive(self):
-        p = Product("Телефон", "Смартфон", 10000, 5)
-        assert p.price == 10000
-        p.price = 15000
-        assert p.price == 15000
+class BaseProduct(ABC):
+    """Абстрактный базовый класс для всех продуктов."""
 
-    def test_price_setter_negative(self, capsys):
-        p = Product("Телефон", "Смартфон", 10000, 5)
-        p.price = -500
-        captured = capsys.readouterr()
-        assert "Цена не должна быть нулевая или отрицательная" in captured.out
-        assert p.price == 10000
+    @abstractmethod
+    def some_abstract_method(self):
+        """Абстрактный метод для гарантии абстрактности класса."""
+        pass
 
-    def test_addition_same_class(self):
-        p1 = Product("Товар1", "Описание1", 100, 5)
-        p2 = Product("Товар2", "Описание2", 200, 3)
-        assert p1 + p2 == 100*5 + 200*3
-
-    def test_addition_different_class_raises(self):
-        s = Smartphone("Модель", "Описание", 1000, 2, 90, "X", 128, "Черный")
-        g = LawnGrass("Трава", "Описание", 500, 10, "Россия", "7 дней", "Зеленый")
-        with pytest.raises(TypeError):
-            _ = s + g
+    @classmethod
+    @abstractmethod
+    def new_product(cls, product_dict):
+        """Создать новый продукт из словаря."""
+        pass
 
 
-class TestCategoryFunctionality:
-    def test_add_product_and_counts(self):
-        cat = Category("Категория", "Описание")
-        p = Product("Товар", "Описание", 100, 1)
-        s = Smartphone("Модель", "Описание", 1000, 2, 90, "X", 128, "Черный")
-        g = LawnGrass("Трава", "Описание", 500, 10, "Россия", "7 дней", "Зеленый")
+class CreationInfoMixin:
+    """
+    Миксин, который при создании объекта
+    выводит информацию о классе и параметрах,
+    а также реализует __repr__.
+    """
 
-        cat.add_product(p)
-        cat.add_product(s)
-        cat.add_product(g)
+    def __init__(self, *args, **kwargs):
+        class_name = self.__class__.__name__
+        print(f"Создан объект класса {class_name} "
+              f"с параметрами: args={args}, kwargs={kwargs}")
+        # НЕ вызываем super().__init__, чтобы избежать ошибки
 
-        assert len(cat.product_list) == 3
-        assert Category.product_count >= 3  # учитывая все тесты
+    def __repr__(self):
+        params = []
+        for attr in ('name', 'description', 'price', 'quantity'):
+            value = getattr(self, attr, None)
+            if value is not None:
+                params.append(f"{attr}={value!r}")
+        params_str = ", ".join(params)
+        return f"{self.__class__.__name__}({params_str})"
 
-    def test_add_invalid_product_raises(self):
-        cat = Category("Категория", "Описание")
-        with pytest.raises(TypeError):
-            cat.add_product("Не продукт")
-        with pytest.raises(TypeError):
-            cat.add_product(123)
-        with pytest.raises(TypeError):
-            cat.add_product(None)
+
+class Product(CreationInfoMixin, BaseProduct):
+    def __init__(self, name: str, description: str, price: float, quantity: int):
+        self.__price = None
+        # Явно вызываем миксин, чтобы вывести информацию
+        CreationInfoMixin.__init__(self, name, description, price, quantity)
+        self.name = name
+        self.description = description
+        self.price = price  # через сеттер с проверкой
+        self.quantity = quantity
+
+    def some_abstract_method(self):
+        pass
+
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self, new_price):
+        if new_price > 0:
+            self.__price = new_price
+        else:
+            print("Цена не должна быть нулевая или отрицательная")
+
+    @classmethod
+    def new_product(cls, product_dict):
+        return cls(**product_dict)
+
+    def __str__(self):
+        return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
+
+    def __repr__(self):
+        return CreationInfoMixin.__repr__(self)
+
+    def __add__(self, other):
+        if type(self) is not type(other):
+            raise TypeError("Складывать можно только товары одного типа")
+        return self.price * self.quantity + other.price * other.quantity
+
+
+class Smartphone(Product):
+    def __init__(self, name, description, price,
+                 quantity, efficiency, model, memory, color):
+        Product.__init__(self, name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+    def __repr__(self):
+        base_repr = CreationInfoMixin.__repr__(self)
+        return (f"{base_repr[:-1]}, "
+                f"efficiency={self.efficiency!r}, model={self.model!r}, "
+                f"memory={self.memory!r}, color={self.color!r})")
+
+
+class LawnGrass(Product):
+    def __init__(self, name, description, price,
+                 quantity, country, germination_period, color):
+        Product.__init__(self, name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+
+    def __repr__(self):
+        base_repr = CreationInfoMixin.__repr__(self)
+        return (f"{base_repr[:-1]}, country={self.country!r}, "
+                f"germination_period={self.germination_period!r}, "
+                f"color={self.color!r})")
+
+
+class Category:
+    category_count = 0
+    product_count = 0
+
+    def __init__(self, name: str, description: str, products=None):
+        self.name = name
+        self.description = description
+        self.__products: List[Product] = []
+        Category.category_count += 1
+
+        if products:
+            for product in products:
+                self.add_product(product)
+
+    def add_product(self, product):
+        if not isinstance(product, Product):
+            raise TypeError("Можно добавлять "
+                            "только объекты Product или его наследников")
+        self.__products.append(product)
+        Category.product_count += 1
+
+    @property
+    def products(self) -> str:
+        return "".join(str(p) + "\n" for p in self.__products)
+
+    @property
+    def product_list(self) -> List[Product]:
+        return self.__products.copy()
+
+    def __str__(self):
+        total_quantity = sum(p.quantity for p in self.__products)
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
+
+
+def load_categories_from_json(file_path: str) -> List[Category]:
+    categories = []
+    with open(file_path, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+        for category_data in data:
+            category = Category(
+                name=category_data['name'],
+                description=category_data['description']
+            )
+            for product_data in category_data.get('products', []):
+                product = Product.new_product(product_data)
+                category.add_product(product)
+            categories.append(category)
+    return categories

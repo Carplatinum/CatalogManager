@@ -1,4 +1,4 @@
-from src.models import Category, Product
+from src.models import Category, Product, LawnGrass, Smartphone
 
 if __name__ == '__main__':
     product1 = Product(
@@ -59,3 +59,30 @@ if __name__ == '__main__':
 
     print(Category.category_count)
     print(Category.product_count)
+
+    # Проверка универсального new_product для LawnGrass
+    grass = LawnGrass.new_product({
+        'name': 'Газонная трава',
+        'description': 'Зеленая газонная трава',
+        'price': 150.0,
+        'quantity': 20,
+        'country': 'Россия',
+        'germination_period': '7 дней',
+        'color': 'Зеленый'
+    })
+    print(grass)
+    print(repr(grass))
+
+    # Проверка универсального new_product для Smartphone
+    phone = Smartphone.new_product({
+        'name': 'iPhone 15 Pro',
+        'description': 'Новый смартфон Apple',
+        'price': 120000.0,
+        'quantity': 10,
+        'efficiency': 95,
+        'model': '15 Pro',
+        'memory': 256,
+        'color': 'Серебристый'
+    })
+    print(phone)
+    print(repr(phone))

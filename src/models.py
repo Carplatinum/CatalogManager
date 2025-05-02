@@ -7,38 +7,32 @@ class BaseProduct(ABC):
     """Абстрактный базовый класс для всех продуктов."""
 
     @abstractmethod
-    def __init__(self, name: str, description: str, price: float, quantity: int):
-        self.name = name
-        self.description = description
-        self.price = price
-        self.quantity = quantity
-
-    @abstractmethod
-    def __str__(self):
+    def some_abstract_method(self):
+        """Абстрактный метод, чтобы класс был действительно абстрактным."""
         pass
 
+    @classmethod
     @abstractmethod
-    def __repr__(self):
+    def new_product(cls, product_dict):
+        """Создать новый продукт из словаря."""
         pass
 
 
 class CreationInfoMixin:
     """
     Миксин, который при создании объекта
-    выводит в консоль информацию о классе и параметрах,
-    а также реализует __repr__ для информативного отображения объекта.
+    выводит информацию о классе и параметрах,
+    а также реализует __repr__.
     """
 
     def __init__(self, *args, **kwargs):
         class_name = self.__class__.__name__
         print(f"Создан объект класса {class_name} "
               f"с параметрами: args={args}, kwargs={kwargs}")
-        super().__init__(*args, **kwargs)
+        # Не вызываем super().__init__, чтобы избежать ошибки
 
     def __repr__(self):
-        # Собираем параметры объекта для отображения
         params = []
-        # Перебираем атрибуты, которые обычно передаются в __init__
         for attr in ('name', 'description', 'price', 'quantity'):
             value = getattr(self, attr, None)
             if value is not None:
@@ -50,12 +44,21 @@ class CreationInfoMixin:
 class Product(CreationInfoMixin, BaseProduct):
     """
     Базовый класс для описания товара.
-    Использует CreationInfoMixin для вывода информации при создании и __repr__.
     """
 
     def __init__(self, name: str, description: str, price: float, quantity: int):
-        self.__price = None  # приватный атрибут цены
-        super().__init__(name, description, price, quantity)
+        self.__price = None
+        # Явно вызываем миксин, чтобы вывести информацию
+        CreationInfoMixin.__init__(self, name, description, price, quantity)
+        # Инициализируем атрибуты
+        self.name = name
+        self.description = description
+        self.price = price  # через сеттер с проверкой
+        self.quantity = quantity
+
+    def some_abstract_method(self):
+        """Реализация абстрактного метода из BaseProduct."""
+        pass
 
     @property
     def price(self):
@@ -70,19 +73,14 @@ class Product(CreationInfoMixin, BaseProduct):
 
     @classmethod
     def new_product(cls, product_dict):
-        return cls(
-            name=product_dict.get("name"),
-            description=product_dict.get("description"),
-            price=product_dict.get("price"),
-            quantity=product_dict.get("quantity")
-        )
+        # Универсальный конструктор для наследников
+        return cls(**product_dict)
 
     def __str__(self):
         return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
 
     def __repr__(self):
-        # Переопределяем __repr__, чтобы добавить больше параметров, если нужно
-        return super().__repr__()
+        return CreationInfoMixin.__repr__(self)
 
     def __add__(self, other):
         if type(self) is not type(other):
@@ -91,41 +89,32 @@ class Product(CreationInfoMixin, BaseProduct):
 
 
 class Smartphone(Product):
-    """
-    Класс для описания смартфона.
-    Наследуется только от Product.
-    """
-
     def __init__(self, name, description, price,
                  quantity, efficiency, model, memory, color):
-        super().__init__(name, description, price, quantity)
+        # Вызываем Product.__init__ напрямую
+        Product.__init__(self, name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
         self.memory = memory
         self.color = color
 
     def __repr__(self):
-        base_repr = super().__repr__()
+        base_repr = CreationInfoMixin.__repr__(self)
         return (f"{base_repr[:-1]}, "
                 f"efficiency={self.efficiency!r}, model={self.model!r}, "
                 f"memory={self.memory!r}, color={self.color!r})")
 
 
 class LawnGrass(Product):
-    """
-    Класс для описания газонной травы.
-    Наследуется только от Product.
-    """
-
-    def __init__(self, name, description, price, quantity,
-                 country, germination_period, color):
-        super().__init__(name, description, price, quantity)
+    def __init__(self, name, description, price,
+                 quantity, country, germination_period, color):
+        Product.__init__(self, name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
         self.color = color
 
     def __repr__(self):
-        base_repr = super().__repr__()
+        base_repr = CreationInfoMixin.__repr__(self)
         return (f"{base_repr[:-1]}, country={self.country!r}, "
                 f"germination_period={self.germination_period!r}, "
                 f"color={self.color!r})")
