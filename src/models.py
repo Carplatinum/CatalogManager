@@ -91,9 +91,11 @@ class Product(CreationInfoMixin, BaseProduct):
 
 
 class Smartphone(Product):
+    """Класс для описания смартфона."""
+
     def __init__(self, name, description, price,
                  quantity, efficiency, model, memory, color):
-        # Вызываем Product.__init__ напрямую
+        """Инициализация смартфона."""
         Product.__init__(self, name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
@@ -101,6 +103,11 @@ class Smartphone(Product):
         self.color = color
 
     def __repr__(self):
+        """Строковое представление смартфона.
+
+        Returns:
+            str: Представление объекта.
+        """
         base_repr = CreationInfoMixin.__repr__(self)
         return (f"{base_repr[:-1]}, "
                 f"efficiency={self.efficiency!r}, model={self.model!r}, "
@@ -108,14 +115,22 @@ class Smartphone(Product):
 
 
 class LawnGrass(Product):
+    """Класс для описания газонной травы."""
+
     def __init__(self, name, description, price,
                  quantity, country, germination_period, color):
+        """Инициализация газонной травы."""
         Product.__init__(self, name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
         self.color = color
 
     def __repr__(self):
+        """Строковое представление газонной травы.
+
+        Returns:
+            str: Представление объекта.
+        """
         base_repr = CreationInfoMixin.__repr__(self)
         return (f"{base_repr[:-1]}, country={self.country!r}, "
                 f"germination_period={self.germination_period!r}, "
@@ -123,10 +138,13 @@ class LawnGrass(Product):
 
 
 class Category:
+    """Класс для описания категории товаров."""
+
     category_count = 0
     product_count = 0
 
     def __init__(self, name: str, description: str, products=None):
+        """Инициализация категории."""
         self.name = name
         self.description = description
         self.__products: List[Product] = []
@@ -137,6 +155,7 @@ class Category:
                 self.add_product(product)
 
     def add_product(self, product):
+        """Добавить продукт в категорию."""
         if not isinstance(product, Product):
             raise TypeError("Можно добавлять "
                             "только объекты Product или его наследников")
@@ -145,17 +164,21 @@ class Category:
 
     @property
     def products(self) -> str:
+        """Получить строковое представление всех продуктов категории."""
         return "".join(str(p) + "\n" for p in self.__products)
 
     @property
     def product_list(self) -> List[Product]:
+        """Получить копию списка продуктов."""
         return self.__products.copy()
 
     def __str__(self):
+        """Строковое представление категории."""
         total_quantity = sum(p.quantity for p in self.__products)
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
     def middle_price(self) -> float:
+        """Вычислить среднюю цену товаров в категории."""
         try:
             total_price = sum(p.price for p in self.__products)
             count = len(self.__products)
@@ -165,6 +188,7 @@ class Category:
 
 
 def load_categories_from_json(file_path: str) -> List[Category]:
+    """Загрузить категории и товары из JSON-файла."""
     categories = []
     with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
