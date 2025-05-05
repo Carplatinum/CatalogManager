@@ -156,10 +156,12 @@ class Category:
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
     def middle_price(self) -> float:
-        if not self.__products:
+        try:
+            total_price = sum(p.price for p in self.__products)
+            count = len(self.__products)
+            return total_price / count
+        except ZeroDivisionError:
             return 0
-        total_price = sum(p.price for p in self.__products)
-        return total_price / len(self.__products)
 
 
 def load_categories_from_json(file_path: str) -> List[Category]:
