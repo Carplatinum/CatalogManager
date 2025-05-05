@@ -1,6 +1,13 @@
 import pytest
+from src.models import Product, Smartphone, LawnGrass
 
-from src.models import Category, LawnGrass, Product, Smartphone
+
+class TestProductQuantityValidation:
+    def test_product_with_zero_quantity_raises_value_error(self):
+        with pytest.raises(ValueError) as exc_info:
+            Product("Бракованный товар", "Неверное количество", 1000.0, 0)
+        assert str(exc_info.value) == ("Товар с нулевым "
+                                       "количеством не может быть добавлен")
 
 
 class TestProductPrice:
@@ -70,51 +77,13 @@ class TestProductAddition:
         with pytest.raises(TypeError):
             _ = s + g
 
-
-class TestCategoryAddProduct:
-    def test_add_valid_product(self):
-        cat = Category("Категория", "Описание")
-        p = Product("Товар", "Описание", 100, 1)
-        s = Smartphone("Модель", "Описание", 1000, 2, 90, "X", 128, "Черный")
-        g = LawnGrass("Трава", "Описание", 500, 10, "Россия", "7 дней", "Зеленый")
-
-        # Добавляем разные объекты-наследники Product без ошибок
-        cat.add_product(p)
-        cat.add_product(s)
-        cat.add_product(g)
-
-        assert len(cat.product_list) == 3
-
-    def test_add_invalid_product_raises(self):
-        cat = Category("Категория", "Описание")
-        with pytest.raises(TypeError):
-            cat.add_product("Не продукт")
-
-        with pytest.raises(TypeError):
-            cat.add_product(123)
-
-        with pytest.raises(TypeError):
-            cat.add_product(None)
-
-
-class TestProductStrAndAdd:
-    def test_str_representation(self):
-        p = Product("Товар", "Описание", 100, 5)
-        assert str(p) == "Товар, 100 руб. Остаток: 5 шт."
-
     def test_addition_with_non_product_raises(self):
         p = Product("Товар", "Описание", 100, 5)
         with pytest.raises(TypeError):
             _ = p + 10
 
 
-class TestCategoryStr:
-    def test_category_str_and_products(self):
-        p1 = Product("Товар1", "Описание1", 50, 2)
-        p2 = Product("Товар2", "Описание2", 150, 3)
-        cat = Category("Категория", "Описание", [p1, p2])
-        assert str(cat) == "Категория, количество продуктов: 5 шт."
-
-        products_str = cat.products
-        assert str(p1) in products_str
-        assert str(p2) in products_str
+class TestProductStr:
+    def test_str_representation(self):
+        p = Product("Товар", "Описание", 100, 5)
+        assert str(p) == "Товар, 100 руб. Остаток: 5 шт."

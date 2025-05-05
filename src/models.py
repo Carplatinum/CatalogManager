@@ -47,6 +47,8 @@ class Product(CreationInfoMixin, BaseProduct):
     """
 
     def __init__(self, name: str, description: str, price: float, quantity: int):
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         self.__price = None
         # Явно вызываем миксин, чтобы вывести информацию
         CreationInfoMixin.__init__(self, name, description, price, quantity)
@@ -152,6 +154,12 @@ class Category:
     def __str__(self):
         total_quantity = sum(p.quantity for p in self.__products)
         return f"{self.name}, количество продуктов: {total_quantity} шт."
+
+    def middle_price(self) -> float:
+        if not self.__products:
+            return 0
+        total_price = sum(p.price for p in self.__products)
+        return total_price / len(self.__products)
 
 
 def load_categories_from_json(file_path: str) -> List[Category]:
