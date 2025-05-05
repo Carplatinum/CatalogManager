@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7c0f40cf-6425-4d88-a17a-26d873508750" name="Changes" comment="Правка модулей по заданиям и написание тестов под новую функциональность.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/CManager.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_json_loader.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_models.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="develop-2" />
+        <entry key="$PROJECT_DIR$" value="Основная" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Carplatinum&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Carplatinum/CatalogManager.git&quot;,
+    &quot;accountId&quot;: &quot;e7097bf4-5b80-4d7e-bcb0-e102a6affa7c&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2wGyzYsWxXvPx2kbXbzAXv2iotO" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Основная-2",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/ANTAQ/Desktop/PythonProjects/CManager"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ANTAQ\Desktop\PythonProjects\CManager\src" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-af26db0dccfe-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.26775.22" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7c0f40cf-6425-4d88-a17a-26d873508750" name="Changes" comment="" />
+      <created>1745682469109</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1745682469109</updated>
+    </task>
+    <task id="LOCAL-00001" summary="1 Задание. Создание классов Product и Category. + тесты к ним и README.md">
+      <option name="closed" value="true" />
+      <created>1745684111679</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1745684111679</updated>
+    </task>
+    <task id="LOCAL-00002" summary="3 Задание. Правка модулей models.py и test_models.py">
+      <option name="closed" value="true" />
+      <created>1745684872915</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1745684872915</updated>
+    </task>
+    <task id="LOCAL-00003" summary="4 Задание. Правка проекта под работу с json.">
+      <option name="closed" value="true" />
+      <created>1745685338838</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1745685338838</updated>
+    </task>
+    <task id="LOCAL-00004" summary="5 Задание. Приватные атрибуты.">
+      <option name="closed" value="true" />
+      <created>1745686948727</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1745686948727</updated>
+    </task>
+    <task id="LOCAL-00005" summary="6 Задание. Реализация геттера.">
+      <option name="closed" value="true" />
+      <created>1745687921066</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1745687921066</updated>
+    </task>
+    <task id="LOCAL-00006" summary="7 Задание. Создание класса-метода new_product. Правка проекта по линтерам.">
+      <option name="closed" value="true" />
+      <created>1745689200053</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1745689200053</updated>
+    </task>
+    <task id="LOCAL-00007" summary="8 Задание. Для класса Product атрибут цены приватный. Геттеры и сеттеры. Тестирование модулем test_products.py">
+      <option name="closed" value="true" />
+      <created>1745689628333</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1745689628333</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Финальные правки.">
+      <option name="closed" value="true" />
+      <created>1745690801795</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1745690801796</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Корректировка линтерами.">
+      <option name="closed" value="true" />
+      <created>1745691227540</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1745691227540</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Правка models.py">
+      <option name="closed" value="true" />
+      <created>1745776815304</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1745776815304</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Правка test_models.py">
+      <option name="closed" value="true" />
+      <created>1745777501877</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1745777501877</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Правка test_json_loader.py.py">
+      <option name="closed" value="true" />
+      <created>1745778058059</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1745778058059</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Правка README.md">
+      <option name="closed" value="true" />
+      <created>1745779246356</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1745779246356</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Создание классов под категории товаров (main, models)">
+      <option name="closed" value="true" />
+      <created>1745856805841</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1745856805841</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Написание тестов для новой функциональности.">
+      <option name="closed" value="true" />
+      <created>1745858416459</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1745858416459</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Правка README.md">
+      <option name="closed" value="true" />
+      <created>1745859577416</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1745859577416</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Создан базовый абстрактный класс с именем &#10;BaseProduct&#10;, который станет родительским для класса продуктов.">
+      <option name="closed" value="true" />
+      <created>1746022935162</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1746022935162</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Реализован класс-миксин, который будет при создании объекта, то есть при работе метода &#10;__init__&#10;, печатать в консоль информацию о том, от какого класса и с какими параметрами был создан объект.">
+      <option name="closed" value="true" />
+      <created>1746023824633</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1746023824633</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Написаны тесты для новой функциональности. Обновлён README.md">
+      <option name="closed" value="true" />
+      <created>1746026351111</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1746026351111</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Правка проекта.">
+      <option name="closed" value="true" />
+      <created>1746039598592</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1746039598592</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Правка проекта.">
+      <option name="closed" value="true" />
+      <created>1746040242436</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1746040242436</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Правка проекта.">
+      <option name="closed" value="true" />
+      <created>1746185024463</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1746185024464</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Реорганизация проекта, правка модулей в соответствии с заданием 1.">
+      <option name="closed" value="true" />
+      <created>1746424584572</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1746424584572</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Добавление метода, который подсчитывает средний ценник всех товаров.">
+      <option name="closed" value="true" />
+      <created>1746427665119</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1746427665119</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Правка модулей по заданиям и написание тестов под новую функциональность.">
+      <option name="closed" value="true" />
+      <created>1746460061619</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1746460061619</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="Основная" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="1 Задание. Создание классов Product и Category. + тесты к ним и README.md" />
+    <MESSAGE value="3 Задание. Правка модулей models.py и test_models.py" />
+    <MESSAGE value="4 Задание. Правка проекта под работу с json." />
+    <MESSAGE value="5 Задание. Приватные атрибуты." />
+    <MESSAGE value="6 Задание. Реализация геттера." />
+    <MESSAGE value="7 Задание. Создание класса-метода new_product. Правка проекта по линтерам." />
+    <MESSAGE value="8 Задание. Для класса Product атрибут цены приватный. Геттеры и сеттеры. Тестирование модулем test_products.py" />
+    <MESSAGE value="Финальные правки." />
+    <MESSAGE value="Корректировка линтерами." />
+    <MESSAGE value="Правка models.py" />
+    <MESSAGE value="Правка test_models.py" />
+    <MESSAGE value="Правка test_json_loader.py.py" />
+    <MESSAGE value="Создание классов под категории товаров (main, models)" />
+    <MESSAGE value="Написание тестов для новой функциональности." />
+    <MESSAGE value="Правка README.md" />
+    <MESSAGE value="Создан базовый абстрактный класс с именем &#10;BaseProduct&#10;, который станет родительским для класса продуктов." />
+    <MESSAGE value="Реализован класс-миксин, который будет при создании объекта, то есть при работе метода &#10;__init__&#10;, печатать в консоль информацию о том, от какого класса и с какими параметрами был создан объект." />
+    <MESSAGE value="Написаны тесты для новой функциональности. Обновлён README.md" />
+    <MESSAGE value="Правка проекта." />
+    <MESSAGE value="Реорганизация проекта, правка модулей в соответствии с заданием 1." />
+    <MESSAGE value="Добавление метода, который подсчитывает средний ценник всех товаров." />
+    <MESSAGE value="Правка модулей по заданиям и написание тестов под новую функциональность." />
+    <option name="LAST_COMMIT_MESSAGE" value="Правка модулей по заданиям и написание тестов под новую функциональность." />
+  </component>
+</project>
